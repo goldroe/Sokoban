@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    public bool can_move_toward(Vector3Int position, Vector3Int dir) {
+    public bool can_push_toward(Vector3Int position, Vector3Int dir) {
         Vector3Int pos_check = position + dir;
         
         if (Utils.wall_is_at_position(pos_check)) {
@@ -14,7 +14,7 @@ public class Mover : MonoBehaviour
         Mover mover = Utils.get_mover_at_position(pos_check);
 
         if (mover != null) {
-            if (!mover.can_move_toward(pos_check, dir)) {
+            if (!mover.can_push_toward(pos_check, dir)) {
                 return false;
             }
         } else {
@@ -24,26 +24,17 @@ public class Mover : MonoBehaviour
         return true;
     }
 
-    public void move(Vector3Int dir) {
+    public void push(Vector3Int dir) {
         transform.position += dir;
     }
     
-    public void start_move(Vector3Int position, Vector3Int dir) {
-        move(dir);
+    public void start_push(Vector3Int position, Vector3Int dir) {
+        push(dir);
         
         Vector3Int pos_move = position + dir;
         Mover mover = Utils.get_mover_at_position(pos_move);
         if (mover != null) {
-            mover.start_move(pos_move, dir);
+            mover.start_push(pos_move, dir);
         }
-    }
-
-
-    void Start() {
-        
-    }
-
-    void Update() {
-        
     }
 }
