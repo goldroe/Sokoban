@@ -219,8 +219,8 @@ public class Player : Mover
     }
 
     IEnumerator turn_player(Vector3Int dir) {
-        Vector3Int facing_direction = get_direction_from_angle(current_angle);
-        Mover mover = Utils.get_mover_at_position(get_fork_tile_position() + dir);
+        Vector3Int fork_pos = get_fork_tile_position();
+        Mover mover = Utils.get_mover_at_position(fork_pos + dir);
 
         float dir_angle = get_angle_from_direction(dir);
         float target_angle = dir_angle - current_angle;
@@ -239,7 +239,7 @@ public class Player : Mover
 
         if (mover != null) {
             Debug.Log("Pushing block next to fork");
-            mover.start_push(get_fork_tile_position() + dir, dir);
+            mover.start_push(fork_pos + dir, dir);
         }
         
         transform.rotation = target_rotation;
