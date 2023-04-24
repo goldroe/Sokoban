@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player : Mover
 {
+    public Mover mover_parent;
+    
     public AudioSource audio_source;
 
-    public bool is_pushing;
     public bool is_turning;
 
     public float turn_duration;
@@ -136,7 +137,7 @@ public class Player : Mover
 
     void try_push(Vector3Int pos, Vector3Int dir) {
         if (can_push_toward(pos, dir)) {
-            start_push(pos, dir);
+            StartCoroutine(start_push(pos, dir));
         } else {
             
         }
@@ -158,6 +159,7 @@ public class Player : Mover
     
     void Start() {
         // audio_source = GetComponent<AudioSource>();
+        mover_parent = transform.parent.GetComponent<Mover>();
         current_angle = transform.rotation.eulerAngles.y; // init based on rotation in scene
     }
 
@@ -237,7 +239,7 @@ public class Player : Mover
 
         if (mover != null) {
             Debug.Log("Pushing block next to fork");
-            mover.start_push(fork_pos + dir, dir);
+            StartCoroutine(mover.start_push(fork_pos + dir, dir));
         }
         
         transform.rotation = target_rotation;
