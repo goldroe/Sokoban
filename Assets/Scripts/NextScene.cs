@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class NextScene: MonoBehaviour
 {
+    [SerializeField] private string sceneToLoad = "Scene";
+    static int count = 1; 
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
@@ -15,6 +18,7 @@ public class NextScene: MonoBehaviour
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        count++;
+        SceneManager.LoadScene(sceneToLoad + count.ToString());
     }
 }
