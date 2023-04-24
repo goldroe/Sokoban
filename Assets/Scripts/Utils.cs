@@ -36,4 +36,8 @@ public class Utils {
         Wall wall = get_wall_at_position(position);
         return wall != null;
     }
+
+    public static Vector3 to_vector3(Vector3Int v) {
+        return new Vector3(v.x, v.y, v.z);
+    }
 }
