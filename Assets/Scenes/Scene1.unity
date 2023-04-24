@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1745,18 +1745,6 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2843701053665800908, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843701053665800908, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843701053665800908, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843701053665800908, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1800,10 +1788,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block
       objectReference: {fileID: 0}
-    - target: {fileID: 3052100820755620882, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -5495902117074765545, guid: ae87fa8113cbc38428277212cccbe449, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37c30e797843f35498d4e73f5e58a8b7, type: 3}
 --- !u!4 &878339963 stripped
@@ -2197,10 +2181,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3877556358683493123, guid: 4a70274bdea67a84aa554abcf8689422, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3877556358683493123, guid: 4a70274bdea67a84aa554abcf8689422, type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6977911177537389267, guid: 4a70274bdea67a84aa554abcf8689422, type: 3}
