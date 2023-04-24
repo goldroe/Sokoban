@@ -157,7 +157,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ae87fa8113cbc38428277212cccbe449, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3bae4d223781e6f4fb9fbfecf1c8de68, type: 2}
+      objectReference: {fileID: 2100000, guid: 3f070b9b51e38424e9597fbb6f473e87, type: 2}
     - target: {fileID: 919132149155446097, guid: ae87fa8113cbc38428277212cccbe449, type: 3}
       propertyPath: m_Name
       value: scube
