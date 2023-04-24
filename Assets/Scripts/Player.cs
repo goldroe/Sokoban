@@ -9,10 +9,8 @@ public class Player : Mover
     public bool is_pushing;
     public bool is_turning;
 
-    private float time_elapsed;
-    public float push_duration;
     public float turn_duration;
-
+    
     public float current_angle; // degrees around y axis
 
     public Vector3Int get_base_tile_position() {

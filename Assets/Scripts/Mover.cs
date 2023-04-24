@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
+    public float push_duration;
+    
     public bool can_push_toward(Vector3Int position, Vector3Int dir) {
         Vector3Int pos_check = position + dir;
         
