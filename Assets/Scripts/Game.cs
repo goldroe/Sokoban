@@ -9,7 +9,7 @@ public class Game : MonoBehaviour
     public List<Mover> movers = new List<Mover>();
     public Dictionary<Vector3Int, HashSet<GameObject>> grid;
     // The name of the scene you want to load.
-    [SerializeField] private string sceneToLoad = "PopUpScene";
+    private string sceneToLoad = "PopUpScene";
 
     private static Game instance_ref;
     public static Game instance

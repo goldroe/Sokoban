@@ -5,7 +5,11 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public bool is_pushing;
-    public const float push_duration = 0.3f;
+    public const float push_duration = 0.22f;
+
+    public void round_position() {
+        transform.position = new Vector3(Mathf.Round(transform.position.x), transform.position.y, Mathf.Round(transform.position.z));
+    }
     
     public bool can_push_toward(Vector3Int position, Vector3Int dir) {
         Vector3Int pos_check = position + dir;
@@ -47,6 +51,7 @@ public class Mover : MonoBehaviour
     public IEnumerator start_push(Vector3Int position, Vector3Int dir) {
         is_pushing = true;
         List<Mover> movers = get_movers_for_push(position, dir);
+        // Lists<Vector3> positions = new List<Vector3>()
         
         float time_elapsed = 0;
         while (time_elapsed < push_duration) {
@@ -60,10 +65,9 @@ public class Mover : MonoBehaviour
             yield return null;
         }
 
-        // round to int or just set it manually?
-        // foreach (var mover in movers) {
-        //     mover.transform.position = mover.transform.;
-        // }
+        foreach (var mover in movers) {
+            mover.round_position();
+        }
         
         is_pushing = false;
     }
@@ -71,14 +75,4 @@ public class Mover : MonoBehaviour
     public void push(Vector3 dist) {
         transform.position += dist;
     }
-    
-    // public void start_push(Vector3Int position, Vector3Int dir) {
-    //     push(dir);
-        
-    //     Vector3Int pos_move = position + dir;
-    //     Mover mover = Utils.get_mover_at_position(pos_move);
-    //     if (mover != null) {
-    //         mover.start_push(pos_move, dir);
-    //     }
-    // }
 }

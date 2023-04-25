@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Player : Mover
 {
-    public Mover mover_parent;
-    
     public AudioSource audio_source;
 
     public bool is_turning;
-
-    public float turn_duration;
+    public const float turn_duration = 0.22f;
     
     public float current_angle; // degrees around y axis
 
@@ -50,8 +47,6 @@ public class Player : Mover
     // for angle rotation on Y axis
     public Vector3Int get_direction_from_angle(float angle) {
         Vector3Int dir = Vector3Int.zero;
-        //dir.x = (int)Mathf.Cos(Mathf.Deg2Rad * angle);
-        //dir.z = (int)Mathf.Sin(Mathf.Deg2Rad * angle);
         // have to do this because angles are fake and the z axes is reversed?
         if (angle == 90) {
             dir.z = -1;
@@ -87,27 +82,8 @@ public class Player : Mover
             return true;
         }
         
-        // if (facing_direction.x != 0 && (Mathf.Abs(dir.x) != Mathf.Abs(facing_direction.x))
-        //     ||
-        //     facing_direction.z != 0 && (Mathf.Abs(dir.z) != Mathf.Abs(facing_direction.z))
-        //     ) {
-        //     return true;
-        // }
-
         return false;
     }
-
-    /*
-        Smoothly tilts a transform towards a target rotation.
-        float tiltAroundZ = Input.GetAxis("Horizontal") * tiltAngle;
-        float tiltAroundX = Input.GetAxis("Vertical") * tiltAngle;
-
-        // Rotate the cube by converting the angles into a quaternion.
-        Quaternion target = Quaternion.Euler(tiltAroundX, 0, tiltAroundZ);
-
-        // Dampen towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-     */
 
     bool can_turn_player(Vector3Int dir) {
         Vector3Int facing_direction = get_direction_from_angle(current_angle);
@@ -116,19 +92,16 @@ public class Player : Mover
         
         // check if block next to base on turn direction
         if (Utils.get_wall_at_position(base_pos + dir) || Utils.get_mover_at_position(base_pos + dir)) {
-            Debug.Log("Can't turn due to block adjacent to base");
             return false;
         }
 
         Wall wall = Utils.get_wall_at_position(fork_pos + dir);
         if (wall != null) {
-            Debug.Log("Can't push wall");
             return false;
         }
         // check if block next to fork can move on turn
         Mover mover = Utils.get_mover_at_position(fork_pos + dir);
         if (mover != null && !can_push_toward(fork_pos + dir, dir)) {
-            Debug.Log("Can't push block on new fork for turn");
             return false;
         }
 
@@ -159,7 +132,6 @@ public class Player : Mover
     
     void Start() {
         // audio_source = GetComponent<AudioSource>();
-        mover_parent = transform.parent.GetComponent<Mover>();
         current_angle = transform.rotation.eulerAngles.y; // init based on rotation in scene
     }
 
@@ -174,54 +146,25 @@ public class Player : Mover
         if (dir != Vector3Int.zero) {
             float dir_angle = get_angle_from_direction(dir);
             float target_angle = dir_angle - current_angle;
-            Debug.Log("Direction: " + dir_angle);
             if (dir_angle == current_angle) {
-                Debug.Log("Moving forward");
                 try_push(get_fork_tile_position(), dir);
             } else if (Mathf.Abs(dir_angle - current_angle) == 180) {
-                Debug.Log("Moving backward");
                 try_push(get_base_tile_position(), dir);
             } else {
-                Debug.Log("Trying turn");
                 try_turn(dir);
             }
         }
     }
     
-    void test_do() {
-        Vector3Int dir = Vector3Int.zero;
-
-        if (can_input()) {
-             dir = get_input_direction();
-        } else {
-            // queue moves
-        }
-        
-        if (dir != Vector3Int.zero) {
-            float dir_angle = get_angle_from_direction(dir);
-            Debug.Log("Direction Angle: " + dir_angle);
-            // forward or behind current direction
-            if (dir_angle == current_angle) {
-                Debug.Log("try move forward direction");
-                try_push(get_fork_tile_position(), dir);
-            } else if (Mathf.Abs(dir_angle - current_angle) == 180) {
-                Debug.Log("try move backward direction");
-                try_push(get_base_tile_position(), dir);
-            } else {
-                try_turn(dir);
-                // StartCoroutine(turn_player(target_angle));
-                // current_angle += target_angle;
-                // current_angle %= 360; // wrap to [0, 360]
-                // current_rotation += new Vector3(0, target_angle, 0);
-                // transform.eulerAngles = current_rotation;
-            }
-        }
-    }
-
     IEnumerator turn_player(Vector3Int dir) {
         Vector3Int fork_pos = get_fork_tile_position();
         Mover mover = Utils.get_mover_at_position(fork_pos + dir);
-
+        
+        if (mover != null) {
+            Debug.Log("Pushing block next to fork");
+            StartCoroutine(mover.start_push(fork_pos + dir, dir));
+        }
+        
         float dir_angle = get_angle_from_direction(dir);
         float target_angle = dir_angle - current_angle;
         
@@ -237,11 +180,6 @@ public class Player : Mover
             yield return null;
         }
 
-        if (mover != null) {
-            Debug.Log("Pushing block next to fork");
-            StartCoroutine(mover.start_push(fork_pos + dir, dir));
-        }
-        
         transform.rotation = target_rotation;
         is_turning = false;
         current_angle += target_angle;
