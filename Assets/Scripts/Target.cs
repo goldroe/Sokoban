@@ -6,7 +6,10 @@ public class Target : MonoBehaviour
 {
     public bool filled = false;
     void OnTriggerEnter(Collider collider) {
-        filled = true;
+        GameObject obj = collider.transform.parent.gameObject;
+        if (obj.CompareTag("Block")) {
+            filled = true;
+        }   
     }
     void OnTriggerExit() {
         filled = false;

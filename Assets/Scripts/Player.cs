@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Player : Mover
 {
+    public Queue<Vector3Int> move_queue;
     public AudioSource audio_source;
 
     public bool is_turning;
-    public const float turn_duration = 0.22f;
     
     public float current_angle; // degrees around y axis
 
@@ -133,17 +133,23 @@ public class Player : Mover
     void Start() {
         // audio_source = GetComponent<AudioSource>();
         current_angle = transform.rotation.eulerAngles.y; // init based on rotation in scene
+        move_queue = new Queue<Vector3Int>();
     }
 
     void Update() {
-        Vector3Int dir = Vector3Int.zero;
-        if (can_input()) {
-            dir = get_input_direction();
-        } else {
-            // queue input
+        Vector3Int dir = get_input_direction();
+        if (!can_input()) {
+            if (dir != Vector3Int.zero) move_queue.Enqueue(dir);
+        } else if (move_queue.Count != 0) {
+            if (dir != Vector3.zero) {
+                move_queue.Enqueue(dir);
+                dir = move_queue.Dequeue();
+            } else {
+                dir = move_queue.Dequeue();
+            }
         }
         
-        if (dir != Vector3Int.zero) {
+        if (can_input() && dir != Vector3Int.zero) {
             float dir_angle = get_angle_from_direction(dir);
             float target_angle = dir_angle - current_angle;
             if (dir_angle == current_angle) {
@@ -174,8 +180,8 @@ public class Player : Mover
         Quaternion start_rotation = transform.rotation;
         Quaternion target_rotation = transform.rotation * Quaternion.Euler(0, target_angle, 0);
 
-        while (time_elapsed < turn_duration) {
-            transform.rotation = Quaternion.Slerp(start_rotation, target_rotation, time_elapsed / turn_duration);
+        while (time_elapsed < move_duration) {
+            transform.rotation = Quaternion.Slerp(start_rotation, target_rotation, time_elapsed / move_duration);
             time_elapsed += Time.deltaTime;
             yield return null;
         }

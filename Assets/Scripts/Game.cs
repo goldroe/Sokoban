@@ -84,6 +84,10 @@ public class Game : MonoBehaviour
         populate_grid();
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
 
+        if (Input.GetKeyDown(KeyCode.R)) {
+            ResetScene();
+        }
+         
         bool all_targets = true;
         for (int i = 0; i < targets.Length; i++)
         {
@@ -104,10 +108,14 @@ public class Game : MonoBehaviour
         }
     }
 
+    void ResetScene() {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+    
     public void LoadSceneOnEvent()
     {
         SceneManager.LoadScene(sceneToLoad);
-
     }
 
 }

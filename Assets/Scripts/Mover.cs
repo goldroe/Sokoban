@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public bool is_pushing;
-    public const float push_duration = 0.22f;
+    public const float move_duration = 0.18f;
 
     public void round_position() {
         transform.position = new Vector3(Mathf.Round(transform.position.x), transform.position.y, Mathf.Round(transform.position.z));
@@ -54,8 +54,8 @@ public class Mover : MonoBehaviour
         // Lists<Vector3> positions = new List<Vector3>()
         
         float time_elapsed = 0;
-        while (time_elapsed < push_duration) {
-            Vector3 dist = Utils.to_vector3(dir) * (Time.deltaTime / push_duration);
+        while (time_elapsed < move_duration) {
+            Vector3 dist = Utils.to_vector3(dir) * (Time.deltaTime / move_duration);
             foreach (var mover in  movers) {
                 mover.push(dist);
             }
