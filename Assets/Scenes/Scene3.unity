@@ -2637,7 +2637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6977911177537389267, guid: 4a70274bdea67a84aa554abcf8689422, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 6977911177537389267, guid: 4a70274bdea67a84aa554abcf8689422, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4081,7 +4081,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movers: []
-  sceneToLoad: PopUpScene
 --- !u!4 &5765284414326348381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5765284415664520176, guid: a1fdda69eeb6ed74b834429f4e135ae4, type: 3}
